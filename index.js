@@ -11,10 +11,20 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 
+var foil = { "name": "foil",
+         "dob": "01/01/1998",
+        "imageurl": "/images/foilimage1.png"}
 
-app.get('/', function (req, res) {
+var hog = { "name": "hog "}
+
+
+app.get('/', (req, res) => {
     res.render('home');
 });
+
+app.get('/foil',(req, res) => {
+    res.render('person', {person :foil })
+} )
 
 // 
 // app.get('/',  (req, res) => {
