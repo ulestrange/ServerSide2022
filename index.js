@@ -11,19 +11,37 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 
-var foil = { "name": "foil",
+var data = {"foil" : { "name": "foil",
          "dob": "01/01/1998",
-        "imageurl": "/images/foilimage1.png"}
+        "imageurl": "/images/foilimage1.png",
+        "hobbies": ["Jokes", "Gags", "Stand up"]},
 
-var hog = { "name": "hog "}
+"arms" :  { "name": "arms",
+        "dob": "03/05/1995",
+       "imageurl": "/images/armsimage1.png"},
+
+"hog" : { "name": "hog",
+        "imageurl": "/images/hogimage1.png"} }
 
 
 app.get('/', (req, res) => {
     res.render('home');
 });
 
+app.get('/listing', (req,res) =>
+    res.render('listing', { personlist: data }))
+
+
 app.get('/foil',(req, res) => {
-    res.render('person', {person :foil })
+    res.render('person', {person : data.foil })
+} )
+
+app.get('/arms',(req, res) => {
+    res.render('person', {person : data.arms })
+} )
+
+app.get('/hog',(req, res) => {
+    res.render('person', {person : data.hog})
 } )
 
 // 
