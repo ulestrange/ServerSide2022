@@ -2,6 +2,9 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+
+const home = require('./routes/home')
+
 app.use(express.static('public'));
 
 // set up handlebars view engine
@@ -24,9 +27,7 @@ var data = {"foil" : { "name": "foil",
         "imageurl": "/images/hogimage1.png"} }
 
 
-app.get('/', (req, res) => {
-    res.render('home');
-});
+app.use('/', home)
 
 app.get('/listing', (req,res) =>
     res.render('listing', { personlist: data }))
@@ -50,15 +51,6 @@ app.get('/hog',(req, res) => {
 //     res.send('Covid Holiday Tours');
 // });
 
-app.get('/about',  (req, res) => {
-    res.type('text/plain');
-    res.send('About Our Holidays');
-});
-
-app.get('/contact',  (req, res) => {
-    res.type('text/plain');
-    res.send('Don\'t bother we never reply');
-});
 
 // custom 404 page
 app.use( (req, res) => {
