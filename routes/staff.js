@@ -23,17 +23,13 @@ var data = {
 }
 
 
-router.get('/foil', (req, res) => {
-    res.render('person', { person: data.foil })
+
+
+router.get('/:name', (req, res) => {
+    var name = req.params.name;
+    res.render('person', { person: data[name] })
 })
 
-router.get('/arms', (req, res) => {
-    res.render('person', { person: data.arms })
-})
-
-router.get('/hog', (req, res) => {
-    res.render('person', { person: data.hog })
-})
 
 router.get('/', (req, res) =>
     res.render('listing', { personlist: data }))
