@@ -23,18 +23,10 @@ app.use('/staff', staff)
 
 
 
-// 
-// app.get('/',  (req, res) => {
-//     res.type('text/plain');
-//     res.send('Covid Holiday Tours');
-// });
-
 
 // custom 404 page
 app.use( (req, res) => {
-    res.type('text/plain');
-    res.status(404);
-    res.send('404 - Not Found');
+    res.render('404');
 });
 
 // custom 500 page

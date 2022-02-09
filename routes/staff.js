@@ -27,7 +27,14 @@ var data = {
 
 router.get('/:name', (req, res) => {
     var name = req.params.name;
-    res.render('person', { person: data[name] })
+
+    if (!data[name]) {
+        console.log('404 because person doesn\'t exist');
+        res.render('404');
+    }
+    else {
+        res.render('person', { person: data[name] });
+    }
 })
 
 
