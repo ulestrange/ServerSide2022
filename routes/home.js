@@ -7,13 +7,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/about',  (req, res) => {
-    res.type('text/plain');
-    res.send('About Our Holidays');
+   
+    res.render('about');
 });
 
 router.get('/contact',  (req, res) => {
-    res.type('text/plain');
-    res.send('Don\'t bother we never reply');
+    
+    res.render('contact');
 });
 
 module.exports = router;
