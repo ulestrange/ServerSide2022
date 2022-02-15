@@ -15,7 +15,9 @@ var handlebars = require('express-handlebars')
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+// middleware for parsing the body of a form need this before you can use req.body
 
+app.use(express.urlencoded({ extended: true }))
 
 const connectionString = 'mongodb://127.0.0.1:27017/staff'
 
