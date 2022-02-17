@@ -6,8 +6,7 @@ const router = express.Router();
 
 router.post('/addnew', async (req, res) => {
 
-    console.log("Data received from a  post");
-    console.table(req.body);
+
 
     createStaff(req.body);
 
@@ -22,19 +21,18 @@ router.get('/addnew', async (req, res) => {
     res.render('staffform')
 
 
-
 })
 
 
 router.get('/:name', async (req, res) => {
     var name = req.params.name;
-    console.log(name);
+
 
   //  const person = await Staff.findOne({'name': name}).lean();
 
     const person = await readStaff({'name': name})
 
-    console.table(person);
+
 
     if (!person) {
         console.log('404 because person doesn\'t exist');
@@ -52,7 +50,7 @@ router.get('/', async (req, res) =>
 
     const staff = await readStaff();
 
-    console.table(staff)
+
 
     res.render('listing', { personlist: staff })
     
