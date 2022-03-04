@@ -1,4 +1,5 @@
 {
+  
   "name": "serverside2022",
   "version": "1.0.0",
   "description": "",
@@ -9,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
-    "express-handlebars": "^6.0.2",
-    "mongoose": "^6.2.1"
+    "express-handlebars": "^6.0.2"
   }
 }
