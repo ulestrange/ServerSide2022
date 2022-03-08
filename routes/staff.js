@@ -27,12 +27,7 @@ router.get('/addnew', async (req, res) => {
 router.get('/:name', async (req, res) => {
     var name = req.params.name;
 
-
-  //  const person = await Staff.findOne({'name': name}).lean();
-
     const person = await readStaff({'name': name})
-
-
 
     if (!person) {
         console.log('404 because person doesn\'t exist');
@@ -46,11 +41,7 @@ router.get('/:name', async (req, res) => {
 
 router.get('/', async (req, res) =>
 {
-   // const staff = await Staff.find().lean();
-
     const staff = await readStaff();
-
-
 
     res.render('listing', { personlist: staff })
     
