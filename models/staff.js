@@ -10,26 +10,39 @@ const staffSchema = new mongoose.Schema({
 const Staff = mongoose.model('Staff', staffSchema)
 
 
-readStaff = async (options={}) =>
-  {
+readStaff = async (options = {}) => {
     if (Object.entries(options).length == 0)
-       return Staff.find().lean();
-   
-   else if (options.name)
-   
-       return Staff.findOne(options).lean();
-   
-   else
-       return undefined;
-   
+        return Staff.find().lean();
+
+    else if (options.name)
+
+        return Staff.findOne(options).lean();
+
+    else
+        return undefined;
+
 }
 
-createStaff = async (data) =>
-{
+createStaff = async (data) => {
     let staffDoc = new Staff(data);
     await staffDoc.save();
 }
 
 
+deleteStaff = async (name) => {
+    const staff = await Staff.findOne({ name: name });
+    await staff.remove();
+
+}
+
+updateStaff = async (data) => {
+    var id = data._id;
+    console.log(id);
+    await Staff.findByIdAndUpdate({_id: id}, {...data})
+}
+
+
 exports.readStaff = readStaff;
 exports.createStaff = createStaff;
+exports.deleteStaff = deleteStaff;
+exports.updateStaff = updateStaff;

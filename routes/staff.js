@@ -1,14 +1,16 @@
 const express = require('express');
-const { readStaff , createStaff } = require('../models/staff');
+const { readStaff , createStaff, deleteStaff, updateStaff } = require('../models/staff');
 const router = express.Router();
 
 
 
 router.post('/addnew', async (req, res) => {
 
+// note we leave error handling for now and assume our data is created.
+    // note: this is not safe code. Any inputs from a user should be validated and sanitised before
+    // being saved to the database.
 
-
-    createStaff(req.body);
+    await createStaff(req.body);
 
     res.redirect(303, '/staff')
 
@@ -37,6 +39,50 @@ router.get('/:name', async (req, res) => {
         res.render('person', { person: person });
     }
 })
+
+// no error checking for now.
+//
+router.get('/:name/delete', async (req, res) => {
+    var name = req.params.name;
+
+    await deleteStaff(name);
+
+    res.redirect(303, '/staff');
+
+});
+
+
+
+// to edit we first need to fetch the data so we can display in on
+// a form to be edited
+
+router.get('/:name/edit', async (req, res) => {
+
+    var name = req.params.name;
+
+    const person = await readStaff({'name': name})
+
+    if (!person) {
+        console.log('404 because person doesn\'t exist');
+        res.render('404');
+    }
+    else {
+        res.render('staffform', { person: person });
+    }
+})
+
+router.post('/addnew', async (req, res) => {
+
+    // note we leave error handling for now and assume our data is created.
+    
+        await createStaff(req.body);
+    
+        res.redirect(303, '/staff')
+    
+    
+    
+    })
+    
 
 
 router.get('/', async (req, res) =>
