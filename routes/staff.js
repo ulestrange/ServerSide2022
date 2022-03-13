@@ -67,8 +67,16 @@ router.get('/:name/edit', async (req, res) => {
         res.render('404');
     }
     else {
-        res.render('staffform', { person: person });
+        res.render('staffeditform', { person: person });
     }
+})
+
+router.post('/:name/edit', async (req,res) =>{
+
+    await updateStaff(req.body);
+    
+    res.redirect(303, '/staff')
+
 })
 
 router.post('/addnew', async (req, res) => {
@@ -78,8 +86,7 @@ router.post('/addnew', async (req, res) => {
         await createStaff(req.body);
     
         res.redirect(303, '/staff')
-    
-    
+       
     
     })
     

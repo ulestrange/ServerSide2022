@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const staffSchema = new mongoose.Schema({
     name: String,
-    dob: Date,
+    dob: String,
     imageurl: String,
     hobbies: [String]
 })
@@ -38,6 +38,7 @@ deleteStaff = async (name) => {
 updateStaff = async (data) => {
     var id = data._id;
     console.log(id);
+    console.table(data)
     await Staff.findByIdAndUpdate({_id: id}, {...data})
 }
 
