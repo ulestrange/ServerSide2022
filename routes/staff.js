@@ -34,6 +34,11 @@ router.get('/:name/delete', async (req, res) => {
 
     await deleteStaff(name);
 
+    req.session.flash =    
+    { type: 'success', intro: 'Data Deleted:', message:  "Data for <strong>" +
+     name + "</strong> has been updated"};
+    
+
     res.redirect(303, '/staff');
 
 });
@@ -61,6 +66,10 @@ router.get('/:name/edit', async (req, res) => {
 router.post('/:name/edit', async (req,res) =>{
 
     await updateStaff(req.body);
+
+    req.session.flash =    
+    { type: 'success', intro: 'Data Updated:', message:  "Data for <strong>" +
+     req.body.name+ "</strong> has been updated"};
     
     res.redirect(303, '/staff')
 
@@ -71,9 +80,10 @@ router.post('/addnew', async (req, res) => {
     // note we leave error handling for now and assume our data is created.
     
         await createStaff(req.body);
-        req.session.staffdata = {name: req.body.name };
-
-    
+        req.session.flash =    
+        { type: 'success', intro: 'Data Saved:', message:  "Data for <strong>" +
+         req.body.name+ "</strong> has been added"};
+ 
         res.redirect(303, '/staff')
        
     

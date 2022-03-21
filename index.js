@@ -4,6 +4,11 @@ const session = require('express-session')
 const app = express()
 const port = 3000
 
+// our own middleware
+
+const {flashMiddleware} = require('./lib/middleware.js');
+
+// our routes
 
 const home = require('./routes/home')
 const staff = require('./routes/staff')
@@ -27,6 +32,13 @@ resave: false,
 saveUninitialized: false,
 }
 ))
+
+
+// import our own Middleware
+
+
+app.use(flashMiddleware);
+
 
 const connectionString = 'mongodb://127.0.0.1:27017/SS2022'
 
