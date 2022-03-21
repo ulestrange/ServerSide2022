@@ -87,7 +87,6 @@ router.get('/', async (req, res) =>
 
     if (req.session.staffdata){
         var newName = req.session.staffdata.name;
-        console.log(newName)
     }
     else {
         var newName = ""
