@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require('express-session')
 const app = express()
 const port = 3000
 
@@ -18,6 +19,14 @@ app.set('view engine', 'handlebars');
 // middleware for parsing the body of a form need this before you can use req.body
 
 app.use(express.urlencoded({ extended: true }))
+
+app.use(session(
+  {secret: "una is great!!",
+cookie: {maxage: 6000},
+resave: false,
+saveUninitialized: false,
+}
+))
 
 const connectionString = 'mongodb://127.0.0.1:27017/SS2022'
 

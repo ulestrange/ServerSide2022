@@ -4,19 +4,6 @@ const router = express.Router();
 
 
 
-router.post('/addnew', async (req, res) => {
-
-// note we leave error handling for now and assume our data is created.
-    // note: this is not safe code. Any inputs from a user should be validated and sanitised before
-    // being saved to the database.
-
-    await createStaff(req.body);
-
-    res.redirect(303, '/staff')
-
-
-
-})
 
 router.get('/addnew', async (req, res) => {
 
@@ -84,6 +71,8 @@ router.post('/addnew', async (req, res) => {
     // note we leave error handling for now and assume our data is created.
     
         await createStaff(req.body);
+        req.session.staffdata = {name: req.body.name };
+
     
         res.redirect(303, '/staff')
        
@@ -96,7 +85,15 @@ router.get('/', async (req, res) =>
 {
     const staff = await readStaff();
 
-    res.render('listing', { personlist: staff })
+    if (req.session.staffdata){
+        var newName = req.session.staffdata.name;
+        console.log(newName)
+    }
+    else {
+        var newName = ""
+    }
+
+    res.render('listing', { personlist: staff, newName : newName })
     
 })
 

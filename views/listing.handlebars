@@ -1,4 +1,9 @@
 
+{{#if newName}}
+<h2> A person has been added to the database with the name of {{newName}} </h2>
+{{/if}}
+
+
 <ul>
   {{#each personlist}}
     <li><a href=/staff/{{this.name}}>
