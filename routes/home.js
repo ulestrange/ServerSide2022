@@ -2,6 +2,12 @@
 const express = require('express');
 const router = express.Router();
 
+
+const linksForHome = 
+[ {url: 'itsligo.ie' , text : 'IT Sligo Home Page'},
+{ url: 'irishtimes.ie', text : 'The Irish Times'}];
+
+
 router.get('/',  (req, res) => {
 
     var message = "";
@@ -14,7 +20,7 @@ router.get('/',  (req, res) => {
     var currentDate = new Date();
 
     res.cookie ('tracking', currentDate.toUTCString(), {signed: true});
-    res.render('home', {'message': message});
+    res.render('home', {'message': message, links : linksForHome});
 });
 
 

@@ -5,7 +5,9 @@ const port = 3000
 
 const cookieParser = require('cookie-parser');
 const home = require('./routes/home')
-const staff = require('./routes/staff')
+const staff = require('./routes/staff');
+const { newsMiddleware } = require('./lib/middleware');
+
 
 app.use(express.static('public'));
 
@@ -43,6 +45,8 @@ db.once('open', () => {
 
 
 app.use(cookieParser("una is great"));
+
+app.use(newsMiddleware)
 
 app.use('/', home)
 
