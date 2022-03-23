@@ -13,6 +13,9 @@ const {flashMiddleware} = require('./lib/middleware.js');
 const home = require('./routes/home')
 const staff = require('./routes/staff')
 
+// middleware which allows the server to deliver static assets and sets the 
+// name of the directory for those assets.
+
 app.use(express.static('public'));
 
 // set up handlebars view engine
@@ -74,6 +77,7 @@ app.use('/staff', staff)
 
 // custom 404 page
 app.use( (req, res) => {
+  res.status(400);
     res.render('404');
 });
 
