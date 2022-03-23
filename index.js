@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-
+const cookieParser = require('cookie-parser');
 const home = require('./routes/home')
 const staff = require('./routes/staff')
 
@@ -15,7 +15,7 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 
-
+app.use(cookieParser("una is great"));
 
 app.use('/', home)
 
