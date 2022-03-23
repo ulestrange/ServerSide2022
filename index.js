@@ -1,4 +1,5 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 const port = 3000
 
@@ -13,6 +14,32 @@ var handlebars = require('express-handlebars')
 .create({ defaultLayout:'main' });
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
+
+// middleware for parsing the body of a form need this before you can use req.body
+
+app.use(express.urlencoded({ extended: true }))
+
+const connectionString = 'mongodb://127.0.0.1:27017/SS2022'
+
+
+mongoose.connect(connectionString, {
+  "useNewUrlParser": true,
+  "useUnifiedTopology": true
+}).
+catch ( error => {
+  console.log('Database connection refused' + error);
+  process.exit(2);
+})
+
+const db = mongoose.connection;
+
+
+db.on('error', console.error.bind(console, 'connection error:'));
+
+db.once('open', () => {
+  console.log("DB connected")
+});
+
 
 
 app.use(cookieParser("una is great"));

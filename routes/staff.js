@@ -1,45 +1,105 @@
 const express = require('express');
+const { readStaff , createStaff, deleteStaff, updateStaff } = require('../models/staff');
 const router = express.Router();
 
 
-var data = {
-    "foil": {
-        "name": "foil",
-        "dob": "01/01/1998",
-        "imageurl": "/images/foilimage1.png",
-        "hobbies": ["Jokes", "Gags", "Stand up"]
-    },
 
-    "arms": {
-        "name": "arms",
-        "dob": "03/05/1995",
-        "imageurl": "/images/armsimage1.png"
-    },
+router.post('/addnew', async (req, res) => {
 
-    "hog": {
-        "name": "hog",
-        "imageurl": "/images/hogimage1.png"
-    }
-}
+// note we leave error handling for now and assume our data is created.
+    // note: this is not safe code. Any inputs from a user should be validated and sanitised before
+    // being saved to the database.
+
+    await createStaff(req.body);
+
+    res.redirect(303, '/staff')
 
 
 
+})
 
-router.get('/:name', (req, res) => {
+router.get('/addnew', async (req, res) => {
+
+    res.render('staffform')
+
+
+})
+
+
+router.get('/:name', async (req, res) => {
     var name = req.params.name;
 
-    if (!data[name]) {
+    const person = await readStaff({'name': name})
+
+    if (!person) {
         console.log('404 because person doesn\'t exist');
         res.render('404');
     }
     else {
-        res.render('person', { person: data[name] });
+        res.render('person', { person: person });
     }
 })
 
+// no error checking for now.
+//
+router.get('/:name/delete', async (req, res) => {
+    var name = req.params.name;
 
-router.get('/', (req, res) =>
-    res.render('listing', { personlist: data }))
+    await deleteStaff(name);
+
+    res.redirect(303, '/staff');
+
+});
+
+
+
+// to edit we first need to fetch the data so we can display in on
+// a form to be edited
+
+router.get('/:name/edit', async (req, res) => {
+
+    var name = req.params.name;
+
+    const person = await readStaff({'name': name})
+
+    if (!person) {
+        console.log('404 because person doesn\'t exist');
+        res.render('404');
+    }
+    else {
+        res.render('staffeditform', { person: person });
+    }
+})
+
+router.post('/:name/edit', async (req,res) =>{
+
+    await updateStaff(req.body);
+    
+    res.redirect(303, '/staff')
+
+})
+
+router.post('/addnew', async (req, res) => {
+
+    // note we leave error handling for now and assume our data is created.
+    
+        await createStaff(req.body);
+    
+        res.redirect(303, '/staff')
+       
+    
+    })
+    
+
+
+router.get('/', async (req, res) =>
+{
+    const staff = await readStaff();
+
+    res.render('listing', { personlist: staff })
+    
+})
+
 
 
 module.exports = router;
