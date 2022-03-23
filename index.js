@@ -19,16 +19,18 @@ const home = require('./routes/home')
 const staff = require('./routes/staff');
 
 
-// middleware which allows the server to deliver static assets and sets the 
-// name of the directory for those assets.
 
-app.use(express.static('public'));
 
 // set up handlebars view engine
 var handlebars = require('express-handlebars')
 .create({ defaultLayout:'main' });
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
+
+// middleware which allows the server to deliver static assets and sets the 
+// name of the directory for those assets.
+
+app.use(express.static('public'));
 
 // middleware for parsing the body of a form need this before you can use req.body
 
@@ -42,10 +44,12 @@ saveUninitialized: false,
 }
 ))
 
+app.use(cookieParser("una is great"));
+
 
 // import our own Middleware
 
-app.use(cookieParser("una is great"));
+
 
 app.use(flashMiddleware);
 app.use(newsMiddleware)
@@ -72,6 +76,7 @@ db.once('open', () => {
   console.log("DB connected")
 });
 
+// import our routes
 
 
 app.use('/', home)
