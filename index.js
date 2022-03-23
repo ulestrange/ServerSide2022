@@ -9,14 +9,14 @@ const cookieParser = require('cookie-parser');
 
 // our own middleware
 
-const {flashMiddleware} = require('./lib/middleware.js');
-const { newsMiddleware } = require('./lib/middleware');
+const {flashMiddleware, newsMiddleware, loggingMiddleware, loggingMiddleware2} = require('./lib/middleware');
 
 // our routes
 
 
 const home = require('./routes/home')
 const staff = require('./routes/staff');
+const { post } = require('./routes/home')
 
 
 
@@ -29,6 +29,8 @@ app.set('view engine', 'handlebars');
 
 // middleware which allows the server to deliver static assets and sets the 
 // name of the directory for those assets.
+
+//app.use(loggingMiddleware)
 
 app.use(express.static('public'));
 
@@ -52,7 +54,12 @@ app.use(cookieParser("una is great"));
 
 
 app.use(flashMiddleware);
-app.use(newsMiddleware)
+app.use(newsMiddleware);
+
+//app.use(loggingMiddleware)
+//app.use(loggingMiddleware2)
+
+
 
 
 const connectionString = 'mongodb://127.0.0.1:27017/SS2022'
@@ -80,9 +87,9 @@ db.once('open', () => {
 
 
 app.use('/', home)
-app.use('/staff', staff)
+app.use('/staff', loggingMiddleware2 ,loggingMiddleware,  staff)
 
-
+app.use('/staff',  staff)
 
 
 // custom 404 page

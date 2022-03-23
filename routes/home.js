@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 
 
+const {loggingMiddleware} = require('../lib/middleware');
+
 const linksForHome = 
 [ {url: 'itsligo.ie' , text : 'IT Sligo Home Page'},
 { url: 'irishtimes.ie', text : 'The Irish Times'}];
@@ -24,7 +26,7 @@ router.get('/',  (req, res) => {
 });
 
 
-router.get('/about',  (req, res) => {
+router.get('/about', loggingMiddleware, (req, res) => {
    
     res.render('about');
 });
