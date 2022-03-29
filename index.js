@@ -1,12 +1,23 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
-const app = express()
+const MongoDBStore = require('connect-mongodb-session')(session);
+const cookieParser = require('cookie-parser');
+
 const PORT =  process.env.PORT || 3000
 const DATABASEURI = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/SS2022'
 const SECRET = process.env.SECRET || 'una is great'
 
-const cookieParser = require('cookie-parser');
+
+const app = express()
+const store = new MongoDBStore({uri:DATABASEURI,
+collection: 'mySessions'})
+
+
+// Catch errors
+store.on('error', function(error) {
+  console.log(error);
+});
 
 
 // our own middleware
@@ -41,6 +52,7 @@ app.use(session(
 cookie: {maxage: 6000},
 resave: false,
 saveUninitialized: false,
+store: store
 }
 ))
 
