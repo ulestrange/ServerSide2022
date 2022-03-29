@@ -5,7 +5,7 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const cookieParser = require('cookie-parser');
 
 const PORT =  process.env.PORT || 3000
-const DATABASEURI = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/SS2022'
+const DATABASEURI = process.env.DATABASEURL || 'mongodb://127.0.0.1:27017/SS2022'
 const SECRET = process.env.SECRET || 'una is great'
 
 
