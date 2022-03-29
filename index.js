@@ -2,7 +2,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const app = express()
-const port =  process.env.PORT || 3000
+const PORT =  process.env.PORT || 3000
+const DATABASEURI = process.env.DATABASE_URL || 'mongodb://127.0.0.1:27017/SS2022'
+const SECRET = process.env.SECRET || 'una is great'
 
 const cookieParser = require('cookie-parser');
 
@@ -35,7 +37,7 @@ app.set('view engine', 'handlebars');
 app.use(express.urlencoded({ extended: true }))
 
 app.use(session(
-  {secret: "una is great!!",
+  {secret: SECRET,
 cookie: {maxage: 6000},
 resave: false,
 saveUninitialized: false,
@@ -45,37 +47,37 @@ saveUninitialized: false,
 
 // import our own Middleware
 
-app.use(cookieParser("una is great"));
+app.use(cookieParser(SECRET));
 
 app.use(flashMiddleware);
 app.use(newsMiddleware)
 
 
-const connectionString = 'mongodb://12fg7.0.0.1:27017/SS2022fdasf'
+const connectionString = DATABASEURI;
 
 
-// mongoose.connect(connectionString, {
-//   "useNewUrlParser": true,
-//   "useUnifiedTopology": true
-// }).
-// catch ( error => {
-//   console.log('Database connection refused' + error);
-//   process.exit(2);
-// })
+mongoose.connect(connectionString, {
+  "useNewUrlParser": true,
+  "useUnifiedTopology": true
+}).
+catch ( error => {
+  console.log('Database connection refused' + error);
+  process.exit(2);
+})
 
-// const db = mongoose.connection;
+const db = mongoose.connection;
 
 
-// db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', console.error.bind(console, 'connection error:'));
 
-// db.once('open', () => {
-//   console.log("DB connected")
-// });
+db.once('open', () => {
+  console.log("DB connected")
+});
 
 
 
 app.use('/', home)
-//app.use('/staff', staff)
+app.use('/staff', staff)
 
 
 
@@ -95,4 +97,4 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
