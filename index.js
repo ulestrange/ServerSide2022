@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const app = express()
-const port = 3000
+const port =  proc.env.PORT || 3000
 
 const cookieParser = require('cookie-parser');
 
@@ -51,31 +51,31 @@ app.use(flashMiddleware);
 app.use(newsMiddleware)
 
 
-const connectionString = 'mongodb://127.0.0.1:27017/SS2022'
+const connectionString = 'mongodb://12fg7.0.0.1:27017/SS2022fdasf'
 
 
-mongoose.connect(connectionString, {
-  "useNewUrlParser": true,
-  "useUnifiedTopology": true
-}).
-catch ( error => {
-  console.log('Database connection refused' + error);
-  process.exit(2);
-})
+// mongoose.connect(connectionString, {
+//   "useNewUrlParser": true,
+//   "useUnifiedTopology": true
+// }).
+// catch ( error => {
+//   console.log('Database connection refused' + error);
+//   process.exit(2);
+// })
 
-const db = mongoose.connection;
+// const db = mongoose.connection;
 
 
-db.on('error', console.error.bind(console, 'connection error:'));
+// db.on('error', console.error.bind(console, 'connection error:'));
 
-db.once('open', () => {
-  console.log("DB connected")
-});
+// db.once('open', () => {
+//   console.log("DB connected")
+// });
 
 
 
 app.use('/', home)
-app.use('/staff', staff)
+//app.use('/staff', staff)
 
 
 
