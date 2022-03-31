@@ -35,6 +35,8 @@ const staff = require('./routes/staff');
 // middleware which allows the server to deliver static assets and sets the 
 // name of the directory for those assets.
 
+///
+
 app.use(express.static('public'));
 
 // set up handlebars view engine
